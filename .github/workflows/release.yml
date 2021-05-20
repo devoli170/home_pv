@@ -9,16 +9,10 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-
-      - name: prepare artifacts for packaging
-        run: |
-          mkdir -p .debpkg/usr/bin
-          mkdir -p .debpkg/etc/systemd/system
-          ls >> .debpkg/usr/bin/samplescript
-          pwd >> .debpkg/usr/bin/samplescript
-          chmod +x .debpkg/usr/bin/samplescript
-      - uses: jiro4989/build-deb-action@v2
+      - name: checkout
+        uses: actions/checkout@v2
+      - name: dep build
+        uses: jiro4989/build-deb-action@v2
         with:
           package: solar
           package_root: solar_raspbian
@@ -27,3 +21,8 @@ jobs:
           arch: 'armel'
           depends: 'python3'
           desc: 'ladex10 service with relay control logic via rapsi GPIO pins'
+      - name: Archive production artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: solar-debian-package
+          path: *.deb
