@@ -1,9 +1,8 @@
 name: build
 
 on:
-  push:
-    tags:
-      - 'v*.*.*'
+  pull_request:
+    types: closed
 
 jobs:
   build-deb:
@@ -26,3 +25,17 @@ jobs:
         with:
           name: solar-debian-package
           path: "*.deb"
+      - name: Tag and prepare release
+        id: tag_and_prepare_release
+        uses: K-Phoen/semver-release-action@master
+        with:
+          release_branch: main
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Upload release notes
+        if: steps.tag_and_prepare_release.outputs.tag
+        uses: Roang-zero1/github-create-release-action@master
+        with:
+          created_tag: ${{ steps.tag_and_prepare_release.outputs.tag }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
