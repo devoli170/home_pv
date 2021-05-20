@@ -1,0 +1,10 @@
+[Unit]
+Description=Solar Script
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/ladex10.sh
+ 
+[Install]
+WantedBy=multi-user.target
+
