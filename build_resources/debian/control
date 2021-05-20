@@ -1,0 +1,9 @@
+Package: solar
+Version: 0.0.1
+Architecture: armel
+Essential: no
+Priority: optional
+Depends: python3
+Maintainer: Oli
+Description: relay control logic for solar DIY
+ solar includes the ladex10 service and its systemd service file. It is used to control relays which are wired to the raspi GPIO pins.

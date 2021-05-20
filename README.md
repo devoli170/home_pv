@@ -26,7 +26,9 @@ Umsetzung in Phyton als systemd service für Raspbian
 3. Wenn Feature fertig ist mit Main-Branch mergen. Entweder...
    1. per UI
    1. per Konsole mit: ``git checkout main && git merge <feature_branch_name>"``
-4. Von Main-Branch .deb file bauen
+4. Von Main-Branch .deb file bauen  
+   [.deb packaging intro](https://wiki.debian.org/Packaging/Intro?action=show&redirect=IntroDebianPackaging)  
+   [How To Package for Debian](https://wiki.debian.org/HowToPackageForDebian)
 5. Git release erstellen und .deb file bereitstellen
 6. .deb file auf raspberry Pi downloaden und upgraden:  
    ``dpkg --install <TODO>.deb``
