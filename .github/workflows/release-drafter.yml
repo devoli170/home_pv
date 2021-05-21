@@ -41,3 +41,8 @@ jobs:
           asset_path: ./solar_${{ steps.get_version.outputs.VERSION }}_armel.deb
           asset_name: solar_${{ steps.get_version.outputs.VERSION }}_armel.deb
           asset_content_type: application/deb
+      - uses: eregon/publish-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          release_id: ${{ steps.draft-release-id.outputs.id }}
