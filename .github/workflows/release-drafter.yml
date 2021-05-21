@@ -13,7 +13,7 @@ jobs:
         uses: actions/checkout@v2
       - name: Get the version
         id: get_version
-        run: echo ::set-output name=VERSION::$(echo $GITHUB_REF | cut -d / -f 3)
+        run: echo ::set-output name=VERSION::$(echo $GITHUB_REF | cut -d / -f 3 | sed -r 's/^.{1}//' )
       # Drafts your next Release notes as tags are pushed to origin
       - name: draft-release
         id: draft-release-id
