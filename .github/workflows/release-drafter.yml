@@ -1,4 +1,4 @@
-name: Release on SemVer Tag
+name: Release on SemVer Tag Push
 
 on:
   push:
@@ -6,11 +6,14 @@ on:
     tags:
     - 'v*.*.*'
 jobs:
-  release-on-tag:
+  release-on-tag-push:
     runs-on: ubuntu-latest
     steps:
       - name: checkout
         uses: actions/checkout@v2
+      - name: Get the version
+        id: get_version
+        run: echo ::set-output name=VERSION::$(echo $GITHUB_REF | cut -d / -f 3)
       # Drafts your next Release notes as tags are pushed to origin
       - name: draft-release
         id: draft-release-id
@@ -35,6 +38,6 @@ jobs:
         with:
           upload_url: ${{ steps.draft-release-id.outputs.upload_url }}
           # file name is build like this: ${INPUT_PACKAGE}_${FIXED_VERSION}_${INPUT_ARCH}.deb, sadly not passed as actions output :(
-          asset_path: ./solar_${{ github.ref }}_armel.deb
-          asset_name: 'solar_${{ github.ref }}_armel.deb'
+          asset_path: ./solar_${{ steps.get_version.outputs.VERSION }}_armel.deb
+          asset_name: solar_${{ steps.get_version.outputs.VERSION }}_armel.deb
           asset_content_type: application/deb
