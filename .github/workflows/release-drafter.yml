@@ -4,7 +4,7 @@ on:
   push:
   # pull_request event is required only for autolabeler
     tags:
-    - v*.*.*
+    - 'v*.*.*'
 jobs:
   update_release_draft:
     runs-on: ubuntu-latest
