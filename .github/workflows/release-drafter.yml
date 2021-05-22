@@ -26,11 +26,16 @@ jobs:
           version: ${{ steps.get_git_version.outputs.GIT_VERSION }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: copy bin to deb resources
+        uses: canastro/copy-file-action@master
+        with:
+          source: "solar_initial_bash_service(deprecated)/develop/ladex10.sh"
+          target: "debian_resources/usr/bin/ladex10.sh"
       - name: build deb
         uses: jiro4989/build-deb-action@v2
         with:
           package: solar
-          package_root: solar_raspbian
+          package_root: debian_resources
           maintainer: Oli
           version: ${{ github.ref }} # refs/tags/v*.*.*
           arch: 'armel'
