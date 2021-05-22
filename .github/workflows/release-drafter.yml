@@ -22,8 +22,8 @@ jobs:
         id: draft-release-id
         uses: release-drafter/release-drafter@v5
         with:
-          tag: ${{ steps.get_git_version.outputs.VERSION }}
-          version: ${{ steps.get_git_version.outputs.VERSION }}
+          tag: ${{ steps.get_git_version.outputs.GIT_VERSION }}
+          version: ${{ steps.get_git_version.outputs.GIT_VERSION }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: build deb
