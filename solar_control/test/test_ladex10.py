@@ -1,5 +1,5 @@
-import unittest
-import ladex10
+import unittest, os
+from solar_control.main_module import ladex10
 
 
 class TestPin(unittest.TestCase):

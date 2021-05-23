@@ -1,11 +1,6 @@
 from time import sleep
 from datetime import datetime
-
-try:
-    import RPi.GPIO as GPIO
-except RuntimeError:
-    print("Error importing RPi.GPIO!  This is probably because you need superuser privileges.  You can achieve this "
-          "by using 'sudo' to run your script")
+from solar_control.io_wrapper import GPIO
 
 
 class OutPin:
@@ -81,27 +76,28 @@ def hausstrom_an():
         print("hausstrom ist an")
 
 
-'''
-def solarstrom_an():
-
-    if solar_l1.wert != HIGH and solar_n.wert != HIGH:
-        print(datetime.now())
-        print("warte 10 minuten bis solarstrom angeschaltet wird")
-        sleep(600)
-        print(datetime.now())
-        hausstrom_aus()
-        print("schalte solarstrom an")
-        solar_l1 = HIGH
-        solar_n = HIGH
-        schreibe_wert_auf_pin()
-    else:
-        print("solarstrom ist an")
-'''
+#def solarstrom_an():
+#    if solar_l1.wert != HIGH and solar_n.wert != HIGH:
+#        print(datetime.now())
+#        print("warte 10 minuten bis solarstrom angeschaltet wird")
+#        sleep(600)
+#        print(datetime.now())
+#        hausstrom_aus()
+#        print("schalte solarstrom an")
+#        solar_l1 = HIGH
+#        solar_n = HIGH
+#        schreibe_wert_auf_pin()
+#    else:
+#        print("solarstrom ist an")
 
 
 def schreibe_wert_auf_pin():
     for pin in out_pins:
         GPIO.output(pin.nummer, pin.wert)
+
+
+def beep():
+    return "beep"
 
 
 def main():
@@ -120,10 +116,6 @@ do
   fi;
 done
 '''
-
-
-def beep():
-    return "bleep"
 
 
 if __name__ == "__main__":

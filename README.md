@@ -39,6 +39,9 @@ Umsetzung in Phyton als systemd service für Raspbian
 ## Build Guide
 Da Python eine Interpreter Sprache ist, ist kein Build von Bytecode nötig. Jedoch wird die Logik als Systemd Service deployed, weshalb einige kopier Operationen nötig sind. Um dies sauberer umzusetzen sollte ein .deb Paket gebaut werden und hier in diesem Repo als Download zur Verfügung gestellt werden
 
+A program that specifies python3 as its interpreter may require its own private Python modules. These modules should be installed in /usr/share/module, or /usr/lib/module if the modules are architecture-dependent (e.g. extensions).
+https://www.debian.org/doc/packaging-manuals/python-policy/#programs-shipping-private-modules
+
 ## Release Guide
 
 
