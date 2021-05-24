@@ -4,7 +4,7 @@ from solar_control.main_module.Pin import InPin, OutPin
 
 class TestPin(unittest.TestCase):
 
-    def test_instanciating_out_pin_works(self):
+    def test_instantiating_out_pin_works(self):
         testName="foo"
         testNummer=23
         testModus=1
@@ -16,7 +16,7 @@ class TestPin(unittest.TestCase):
         self.assertEqual(testPin.modus, testModus)
         self.assertEqual(testPin.wert, testWert)
 
-    def test_instanciating_in_pin_works(self):
+    def test_instantiating_in_pin_works(self):
         testName="foo"
         testNummer=23
         testModus=0
