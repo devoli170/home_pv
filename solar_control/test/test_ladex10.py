@@ -1,4 +1,4 @@
-import unittest, os
+import unittest
 from solar_control.main_module import ladex10
 
 
