@@ -25,16 +25,16 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: copy bin to deb resources
         run: mkdir -p debian_resources/usr/bin && cp "solar_initial_bash_service(deprecated)/develop/ladex10.sh" debian_resources/usr/bin/ladex10.sh
-      #- name: build deb
-      #  uses: jiro4989/build-deb-action@v2
-      #  with:
-      #    package: solar
-      #    package_root: debian_resources
-      #    maintainer: Oli
-      #    version: ${{ steps.get_version.outputs.VERSION }}
-      #    arch: 'armel'
-      #    depends: 'python3, wiringpi'
-      #    desc: 'ladex10 systemd service'
+      - name: build deb
+        uses: jiro4989/build-deb-action@v2
+        with:
+          package: solar
+          package_root: debian_resources
+          maintainer: Oli
+          version: ${{ steps.get_version.outputs.VERSION }}
+          arch: 'armel'
+          depends: 'python3, wiringpi'
+          desc: 'ladex10 systemd service'
       # - name: Upload Deb as Release Asset
       #   id: upload-release-asset
       #   uses: actions/upload-release-asset@v1
