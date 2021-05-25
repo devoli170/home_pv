@@ -2,7 +2,7 @@ import platform
 
 
 def laeuft_auf_raspi():
-    return True if platform.machine().startswith("ARM") else False
+    return True if platform.machine().startswith("arm") else False
 
 
 if laeuft_auf_raspi():

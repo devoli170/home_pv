@@ -40,5 +40,3 @@ class StromStateMachine:
             self.solar_pins.anschalten()
             self.aktiver_strom = SOLARSTROM
 
-
-

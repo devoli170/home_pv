@@ -1,3 +1,4 @@
+#!/usr/bin/python3 -u
 from time import sleep
 from solar_control.io_wrapper import GPIO
 from solar_control.main_module.Pin import OutPin, InPin, StromPins

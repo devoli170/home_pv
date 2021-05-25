@@ -4,6 +4,10 @@ Description=Solar Script
 [Service]
 Type=simple
 ExecStart=/usr/bin/ladex10.sh
+WorkingDirectory=/etc/ladex10
+StandardOutput=/var/log/ladex10.log
+StandardError=/home/user/ladex10_err.log
+Restart=always
  
 [Install]
 WantedBy=multi-user.target
