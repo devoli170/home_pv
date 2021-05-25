@@ -12,6 +12,7 @@ jobs:
       - name: Get the git version
         id: get_git_version
         run: echo ::set-output name=GIT_VERSION::$(echo $GITHUB_REF | cut -d / -f 3 )
+     #fooo
      # - name: Get the version
      #   id: get_version
      #   run: echo ::set-output name=VERSION::$(echo $GITHUB_REF | cut -d / -f 3 | sed -r 's/^.{1}//' )
