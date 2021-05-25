@@ -3,6 +3,6 @@ Version: 0.0.1
 Architecture: armel
 Essential: no
 Priority: optional
-Depends: python3
+Depends: python3, jq
 Maintainer: Oli
 Description: ladex10 service with relay control logic via rapsi GPIO pins

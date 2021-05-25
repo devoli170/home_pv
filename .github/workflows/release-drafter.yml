@@ -2,7 +2,6 @@ name: Release on SemVer Tag Push
 
 on:
   push:
-  # pull_request event is required only for autolabeler
     tags:
     - 'v*.*.*'
 jobs:
