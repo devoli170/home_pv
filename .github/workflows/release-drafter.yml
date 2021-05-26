@@ -26,9 +26,9 @@ jobs:
       - name: copy old script deb resources
         run: mkdir -p debian_resources/usr/bin && cp "solar_initial_bash_service(deprecated)/develop/ladex10.sh" debian_resources/usr/bin/ladex10.sh && chmod +x debian_resources/usr/bin/ladex10.sh
       - name: create dirs for debian package
-        run: mkdir -p debian_resources/opt/solar_control
+        run: mkdir -p debian_resources/opt/solar/solar_control
       - name: copy python resources for packaging
-        run: cp -r solar_control/* debian_resources/opt/solar_control
+        run: cp -r solar_control/* debian_resources/opt/solar/solar_control
       - name: build deb
         uses: jiro4989/build-deb-action@v2
         with:
