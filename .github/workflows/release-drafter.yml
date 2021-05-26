@@ -28,7 +28,7 @@ jobs:
       - name: create dirs for debian package
         run: mkdir -p debian_resources/opt/solar_control
       - name: copy python resources for packaging
-        run: cp solar_control/* debian_resources/opt/solar_control
+        run: cp -r solar_control/* debian_resources/opt/solar_control
       - name: build deb
         uses: jiro4989/build-deb-action@v2
         with:
