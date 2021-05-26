@@ -1,5 +1,8 @@
 from solar_control.io_wrapper import GPIO
-from time import sleep
+import logging.config
+
+logging.config.fileConfig('../conf/logging.conf')
+logger = logging.getLogger("Pin")
 
 
 class Pin:
@@ -17,6 +20,7 @@ class OutPin(Pin):
         self.schreibe_wert_an_pin()
 
     def schreibe_wert_an_pin(self):
+        logger.debug("Schreibe Wert: {} an Pin: {}-{}".format(self.nummer, self.name, self.wert))
         GPIO.output(self.nummer, self.wert)
 
 
@@ -34,11 +38,17 @@ class StromPins:
         self._l1 = l1
 
     def ausschalten(self):
+        logger.debug(
+            "Setze Pins ({}-{}, {}-{}) auf Wert: {}".format(self._n.name, self._n.nummer, self._l1.name, self._l1.nummer,
+                                                            GPIO.LOW))
         self._n.wert = GPIO.LOW
         self._l1.wert = GPIO.LOW
         self.flush()
 
     def anschalten(self):
+        logger.debug(
+            "Setze Pins ({}-{}, {}-{}) auf Wert: {}".format(self._n.name, self._n.nummer, self._l1.name, self._l1.nummer,
+                                                            GPIO.HIGH))
         self._n.wert = GPIO.HIGH
         self._l1.wert = GPIO.HIGH
         self.flush()
@@ -49,4 +59,3 @@ class StromPins:
 
     def lese_zustand(self):
         return GPIO.HIGH if self._n == GPIO.HIGH and self._l1 == GPIO.HIGH else GPIO.LOW
-
