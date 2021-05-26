@@ -4,6 +4,9 @@ import threading
 SOLARSTROM = 1
 HAUSSTROM = 0
 
+import logging.config
+logging.config.fileConfig('../conf/logging.conf')
+logger = logging.getLogger("Steuerungslogik")
 
 class StromSteuerung(threading.Thread):
     def __init__(self, solar_pins, haus_pins, input_pin, solar_wechsel_wartezeit):
@@ -23,20 +26,24 @@ class StromSteuerung(threading.Thread):
         return self._stop_event.is_set()
 
     def run(self):
+        logger.info("Thread gestartet")
         while not self.stopped():
             aktuelles_signal = self.input_pin.lese_pin_wert()
             if self.boot:
                 if aktuelles_signal == SOLARSTROM:
+                    logger.info("Solarstrom bei Start des Programms. Überspringe Wartezeit und schalte auf Solarstrom")
                     self._schalte_relais_je_nach_optokoppler_signal(aktuelles_signal, warten=False)
                 self.boot = False
                 continue
 
             if aktuelles_signal != self.aktiver_strom:
+                logger.info("Änderung erkannt...")
                 self._schalte_relais_je_nach_optokoppler_signal(aktuelles_signal)
         self._clean_up()
 
     def _schalte_relais_je_nach_optokoppler_signal(self, aktuelles_signal, warten=True):
         if aktuelles_signal == HAUSSTROM:
+            logger.info("Schalte von Solarstrom zu Hausstrom")
             self.solar_pins.ausschalten()
             sleep(1)
             self.haus_pins.anschalten()
@@ -44,6 +51,7 @@ class StromSteuerung(threading.Thread):
             self.aktiver_strom = HAUSSTROM
 
         if aktuelles_signal == SOLARSTROM:
+            logger.info("Schalte von Hausstrom zu Solarstrom nach {} Sekunden".format(self.solar_wartezeit))
             if warten:
                 sleep(self.solar_wartezeit)
             self.haus_pins.ausschalten()
@@ -53,4 +61,4 @@ class StromSteuerung(threading.Thread):
             self.aktiver_strom = SOLARSTROM
 
     def _clean_up(self):
-        print("Strom Schaltung ending gracefully.")
+        logger.info("Thread beendet sauber")
