@@ -5,7 +5,7 @@ Description=Solar Script
 Type=simple
 ExecStart=/usr/bin/ladex10.sh
 StandardOutput=append:/var/log/ladex10.log
-StandardError=append:/home/user/ladex10_err.log
+StandardError=append:/var/log/ladex10_err.log
 Restart=always
  
 [Install]
