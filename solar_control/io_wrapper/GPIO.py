@@ -7,8 +7,10 @@ def laeuft_auf_raspi():
 
 if laeuft_auf_raspi():
     import RPi.GPIO as GPIO
+    print("RPI loaded as GPIO")
 else:
     import Mock.GPIO as GPIO
+    print("Mock.GPIO loaded as GPIO")
 
 
 def setup(*args):
