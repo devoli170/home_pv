@@ -24,7 +24,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: copy bin to deb resources
-        run: mkdir -p debian_resources/usr/bin && cp "solar_initial_bash_service(deprecated)/develop/ladex10.sh" debian_resources/usr/bin/ladex10.sh && chmod +x debian_resources/usr/bin/ladex10.sh
+        run: mkdir -p debian_resources/usr/bin && cp "solar_initial_bash_service(deprecated)/testing/ladex10.sh" debian_resources/usr/bin/ladex10.sh && chmod +x debian_resources/usr/bin/ladex10.sh
       - name: build deb
         uses: jiro4989/build-deb-action@v2
         with:
