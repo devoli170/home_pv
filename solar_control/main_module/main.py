@@ -16,13 +16,10 @@ def install(package):
 
 if __name__ == '__main__':
     try:
-        import GPIO
+        from solar_control.io_wrapper import GPIO
     except ImportError:
-        install('RPI')
-        import GPIO
-
-
-from solar_control.io_wrapper import GPIO
+        install('rpi.gpio')
+        from solar_control.io_wrapper import GPIO
 from solar_control.main_module.Pin import OutPin, InPin, StromPins
 from solar_control.main_module.StromSteuerung import StromSteuerung
 
@@ -34,8 +31,8 @@ class GracefulKiller:
     kill_now = False
 
     def __init__(self):
-        signal.signal(signal.SIGINT, self.exit_gracefully)
-        signal.signal(signal.SIGTERM, self.exit_gracefully)
+        signal.signal(signal.SIGINT, self.exit_gracefully(self))
+        signal.signal(signal.SIGTERM, self.exit_gracefully(self))
 
     def exit_gracefully(self):
         logger.info("Signal zum Beenden erhalten")
@@ -44,6 +41,8 @@ class GracefulKiller:
 
 def main():
     logger.info("Starte Programm")
+    logger.info("Benutze BCM Nummerierung der Pins")
+    GPIO.setmode(GPIO.BCM)
     logger.info("Initialisiere Pins")
     solar_l1 = OutPin("solar_l1", 17, GPIO.OUT, GPIO.LOW)
     solar_n = OutPin("solar_n", 18, GPIO.OUT, GPIO.LOW)
