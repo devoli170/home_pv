@@ -5,11 +5,26 @@ from time import sleep
 from sys import path as sys_path
 import os.path as path
 from os import getcwd
+
 sys_path.insert(0, path.abspath(path.join(getcwd(), "../..")))
+import pip._internal as pip
+
+
+def install(package):
+    pip.main(['install', package])
+
+
+if __name__ == '__main__':
+    try:
+        import GPIO
+    except ImportError:
+        install('RPI')
+        import GPIO
+
+
 from solar_control.io_wrapper import GPIO
 from solar_control.main_module.Pin import OutPin, InPin, StromPins
 from solar_control.main_module.StromSteuerung import StromSteuerung
-
 
 logging.config.fileConfig('../conf/logging.conf')
 logger = logging.getLogger("main")
