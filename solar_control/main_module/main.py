@@ -6,11 +6,12 @@ from sys import path as sys_path
 import pathlib
 
 p = pathlib.Path(__file__)
-package_root = p.parent.absolute().parent.absolute()
-logging.config.fileConfig('{}/conf/logging.conf'.format(package_root), disable_existing_loggers=False)
+PACKAGE_ROOT = str(p.parent.absolute().parent.absolute())
+logging.config.fileConfig('{}/conf/logging.conf'.format(PACKAGE_ROOT), disable_existing_loggers=False)
 logger = logging.getLogger("main")
-logger.info("Adding {} to sys.path".format(package_root))
-sys_path.insert(0, package_root)
+APPLICATION_ROOT = str(p.parent.absolute().parent.absolute().parent.absolute())
+logger.info("Adding {} to sys.path".format(APPLICATION_ROOT))
+sys_path.insert(0, APPLICATION_ROOT)
 import pip._internal as pip
 
 
