@@ -15,7 +15,7 @@ def laeuft_auf_raspi():
 
 if laeuft_auf_raspi():
     import RPi.GPIO as GPIO
-
+    GPIO.setmode(GPIO.BCM)
     logger.debug("RPI loaded as GPIO")
 else:
     import Mock.GPIO as GPIO

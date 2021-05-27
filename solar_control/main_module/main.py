@@ -36,14 +36,11 @@ class SIG_handler():
     def signal_handler(self, signal, frame):
         self.exit_gracefully = True
 
-
-handler = SIG_handler()
-signal.signal(signal.SIGINT, handler.signal_handler)
-signal.signal(signal.SIGTERM, handler.signal_handler)
-
-
 def main():
     logger.info("Starte Programm")
+    handler = SIG_handler()
+    signal.signal(signal.SIGINT, handler.signal_handler)
+    signal.signal(signal.SIGTERM, handler.signal_handler)
     logger.info("Benutze BCM Nummerierung der Pins")
     GPIO.setwarnings(False)
     GPIO.setmode(GPIO.BCM)
@@ -64,11 +61,9 @@ def main():
     strom_steuerung.start()
     logger.info("Steuerungs Logik als Thread gestartet. Warte auf Signale zum Beenden des Programms")
 
-    killer = SIG_handler()
-    while not killer.exit_gracefully:
+    while not handler.exit_gracefully:
         sleep(1)
     strom_steuerung.stop()
-    strom_steuerung.join()
     GPIO.cleanup()
     logger.info("Programm beendet.")
 
