@@ -37,7 +37,7 @@ jobs:
           maintainer: Oli
           version: ${{ steps.get_version.outputs.VERSION }}
           arch: 'armhf'
-          depends: 'python3, wiringpi'
+          depends: 'python3, wiringpi, python3-pip'
           desc: 'ladex10 systemd service'
       - name: Upload Deb as Release Asset
         id: upload-release-asset
