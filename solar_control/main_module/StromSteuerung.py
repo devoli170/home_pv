@@ -1,12 +1,16 @@
 from time import sleep
 import threading
+import logging.config
+import pathlib
+
+p = pathlib.Path(__file__)
+package_root = p.parent.absolute().parent.absolute()
+logging.config.fileConfig('{}/conf/logging.conf'.format(package_root), disable_existing_loggers=False)
+logger = logging.getLogger("Steuerungslogik")
 
 SOLARSTROM = 1
 HAUSSTROM = 0
 
-import logging.config
-logging.config.fileConfig('../conf/logging.conf')
-logger = logging.getLogger("Steuerungslogik")
 
 class StromSteuerung(threading.Thread):
     def __init__(self, solar_pins, haus_pins, input_pin, solar_wechsel_wartezeit):

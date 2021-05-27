@@ -1,8 +1,11 @@
-import platform, logging, logging.config
-
+import platform
+import logging
 import logging.config
+import pathlib
 
-logging.config.fileConfig('../conf/logging.conf')
+p = pathlib.Path(__file__)
+package_root = p.parent.absolute().parent.absolute()
+logging.config.fileConfig('{}/conf/logging.conf'.format(package_root))
 logger = logging.getLogger("GPIO")
 
 
@@ -38,6 +41,9 @@ def setmode(mode):
 
 def cleanup():
     GPIO.cleanup()
+
+def setwarnings(bool):
+    GPIO.setwarnings(False)
 
 
 BCM = GPIO.BCM

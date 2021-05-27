@@ -1,7 +1,10 @@
 from solar_control.io_wrapper import GPIO
 import logging.config
+import pathlib
 
-logging.config.fileConfig('../conf/logging.conf')
+p = pathlib.Path(__file__)
+package_root = p.parent.absolute().parent.absolute()
+logging.config.fileConfig('{}/conf/logging.conf'.format(package_root), disable_existing_loggers=False)
 logger = logging.getLogger("Pin")
 
 

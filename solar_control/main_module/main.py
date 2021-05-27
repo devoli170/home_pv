@@ -3,12 +3,12 @@ import signal
 import logging.config
 from time import sleep
 from sys import path as sys_path
-import os.path as path
-from os import getcwd
+import pathlib
 
-logging.config.fileConfig('../conf/logging.conf')
+p = pathlib.Path(__file__)
+package_root = p.parent.absolute().parent.absolute()
+logging.config.fileConfig('{}/conf/logging.conf'.format(package_root), disable_existing_loggers=False)
 logger = logging.getLogger("main")
-package_root = path.abspath(path.join(getcwd(), "../.."))
 logger.info("Adding {} to sys.path".format(package_root))
 sys_path.insert(0, package_root)
 import pip._internal as pip
@@ -44,6 +44,7 @@ signal.signal(signal.SIGTERM, handler.signal_handler)
 def main():
     logger.info("Starte Programm")
     logger.info("Benutze BCM Nummerierung der Pins")
+    GPIO.setwarnings(False)
     GPIO.setmode(GPIO.BCM)
     logger.info("Initialisiere Pins")
     solar_l1 = OutPin("solar_l1", 17, GPIO.OUT, GPIO.LOW)
