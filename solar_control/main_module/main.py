@@ -6,7 +6,11 @@ from sys import path as sys_path
 import os.path as path
 from os import getcwd
 
-sys_path.insert(0, path.abspath(path.join(getcwd(), "../..")))
+logging.config.fileConfig('../conf/logging.conf')
+logger = logging.getLogger("main")
+package_root = path.abspath(path.join(getcwd(), "../.."))
+logger.info("Adding {} to sys.path".format(package_root))
+sys_path.insert(0, package_root)
 import pip._internal as pip
 
 
@@ -23,20 +27,18 @@ if __name__ == '__main__':
 from solar_control.main_module.Pin import OutPin, InPin, StromPins
 from solar_control.main_module.StromSteuerung import StromSteuerung
 
-logging.config.fileConfig('../conf/logging.conf')
-logger = logging.getLogger("main")
 
-
-class GracefulKiller:
-    kill_now = False
-
+class SIG_handler():
     def __init__(self):
-        signal.signal(signal.SIGINT, self.exit_gracefully(self))
-        signal.signal(signal.SIGTERM, self.exit_gracefully(self))
+        self.exit_gracefully = False
 
-    def exit_gracefully(self):
-        logger.info("Signal zum Beenden erhalten")
-        self.kill_now = True
+    def signal_handler(self, signal, frame):
+        self.exit_gracefully = True
+
+
+handler = SIG_handler()
+signal.signal(signal.SIGINT, handler.signal_handler)
+signal.signal(signal.SIGTERM, handler.signal_handler)
 
 
 def main():
@@ -59,10 +61,13 @@ def main():
     strom_steuerung = StromSteuerung(solar_pins, haus_pins, optokoppler, wechsel_zu_solar_strom_wartezeit_in_sec)
     strom_steuerung.start()
     logger.info("Steuerungs Logik als Thread gestartet. Warte auf Signale zum Beenden des Programms")
-    killer = GracefulKiller()
-    while not killer.kill_now:
+
+    killer = SIG_handler()
+    while not killer.exit_gracefully:
         sleep(1)
     strom_steuerung.stop()
+    strom_steuerung.join()
+    GPIO.cleanup()
     logger.info("Programm beendet.")
 
 

@@ -36,6 +36,10 @@ def setmode(mode):
     GPIO.setmode(mode)
 
 
+def cleanup():
+    GPIO.cleanup()
+
+
 BCM = GPIO.BCM
 HIGH = GPIO.HIGH
 LOW = GPIO.LOW
