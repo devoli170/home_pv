@@ -1,0 +1,20 @@
+docker pull prom/prometheus
+
+nur das prometheus yaml mounten
+
+docker run -p 9090:9090 prom/prometheus --entrypoint "cat prom/prometheus/prometheus.yml"
+
+docker run ^
+    -p 9090:9090 ^
+    -v c:/workspace/teich_pv/infra/prometheus.yml:/etc/prometheus/prometheus.yml ^
+    prom/prometheus
+
+ganzen config ordner mounten
+docker run \
+    -p 9090:9090 \
+    -v /path/to/config:/etc/prometheus \
+    prom/prometheus
+
+docker pull grafana/grafana
+
+docker run -d -p 3000:3000 grafana/grafana
